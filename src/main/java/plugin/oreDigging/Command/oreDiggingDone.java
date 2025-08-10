@@ -2,11 +2,13 @@ package plugin.oreDigging.Command;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SplittableRandom;
+import java.util.function.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,22 +35,26 @@ public class oreDiggingDone implements CommandExecutor , Listener {
   public static final String DELL = "delete";
 
   private int gameTime = 20;
-
-  private int coal_cnt = 0 ;
-  private int copper_cnt= 0;
-  private int lapis_cnt= 0;
-  private int iron_cnt= 0;
-  private int gold_cnt= 0;
-  private int red_cnt = 0;
-  private int dia_cnt = 0;
-  private int eme_cnt = 0;
-  private int quartz_cnt = 0;
+  //private int currentCount = 0;
 
   private Main main;
   private PlayerScoreData playerScoreData = new PlayerScoreData();
   private List<PlayerInfo> playerInfoList = new ArrayList<>();
 
-  private Map<String, Integer> OreBreakCount =  new HashMap<String, Integer>();
+
+  enum Ore_Type {
+    Coal_Type,
+    Copper_Type,
+    Lapis_Type,
+    Iron_Type,
+    Gold_Type,
+    Red_Type,
+    Dia_Type,
+    Eme_Type,
+    Quartz_Type
+  }
+
+  private Map<Ore_Type, Integer> OreBreakCount =  new EnumMap<>(Ore_Type.class);
 
   public oreDiggingDone(Main main) {
     this.main = main;
@@ -66,6 +72,10 @@ public class oreDiggingDone implements CommandExecutor , Listener {
             addNewPlayer(player);
           }
         }
+      }
+
+      for (Ore_Type type : Ore_Type.values()) {
+        OreBreakCount.put(type, 0);
       }
 
       if(args.length ==1 && LIST.equals(args[0]) ) {
@@ -132,15 +142,39 @@ public class oreDiggingDone implements CommandExecutor , Listener {
     Player player = event.getPlayer();
     Block block = event.getBlock();
 
+
+
+    Map<Ore_Type, Predicate<Block>> conditionCheckers = Map.of(
+        Ore_Type.Coal_Type, p -> block.getType() == getBlock().COAL_ORE
+    );
+
+
+
     if(Objects.isNull(player) || playerInfoList.isEmpty()){
       return;
     }
     for(PlayerInfo playerInfo : playerInfoList){
       if(playerInfo.getPlayerName().equals(player.getName())){
         if(gameTime > 0) {
+
+          for (Map.Entry<Ore_Type, Predicate<Block>> entry : conditionCheckers.entrySet()) {
+            Ore_Type type = entry.getKey();         // 条件の種類
+            Predicate<Block> checker = entry.getValue(); // 判定関数
+
+            if (checker.test(block)) { // 条件を満たすか判定
+              int currentCount = OreBreakCount.get(type);
+              OreBreakCount.put(type, currentCount + 1); // カウントアップ
+              player.sendMessage("コンボカウントアップ！！");
+              player.sendMessage("コンボ数は" + OreBreakCount.get(type) + "！！");
+            }else{
+              OreBreakCount.put(type, 0); // カウントアップ
+              player.sendMessage("コンボカウントリセット！！");
+            }
+
+          }
           switch (block.getType()) {
             case COAL_ORE -> {
-              if(coal_cnt > 3){
+              if(OreBreakCount.get(Ore_Type.Coal_Type) > 3){
                 playerInfo.setScore(playerInfo.getScore() + 10+30);
                 player.sendMessage(
                   "石炭コンボ発生！　現在のスコアは" + playerInfo.getScore() + "点！");
@@ -149,63 +183,48 @@ public class oreDiggingDone implements CommandExecutor , Listener {
                 player.sendMessage(
                     "石炭を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
               }
-              coal_cnt++;
-              copper_cnt = 0;
-              lapis_cnt = 0;
-              iron_cnt = 0;
-              gold_cnt = 0;
-              red_cnt = 0;
-              dia_cnt = 0;
-              eme_cnt = 0;
-              quartz_cnt = 0;
+              player.sendMessage("判定時の石炭コンボ数は" + OreBreakCount.get(Ore_Type.Coal_Type) + "！！");
+
             }
             case COPPER_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 15);
               player.sendMessage(
                   "銅鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case LAPIS_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 40);
               player.sendMessage(
                   "ラピスラズリを壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case IRON_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 15);
               player.sendMessage(
                   "鉄鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case GOLD_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 80);
               player.sendMessage(
                   "金鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case REDSTONE_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 40);
               player.sendMessage(
                   "レッドストーン鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case DIAMOND_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 100);
               player.sendMessage(
                   "ダイヤモンド鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case EMERALD_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 80);
               player.sendMessage(
                   "エメラルド鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
             case NETHER_QUARTZ_ORE -> {
               playerInfo.setScore(playerInfo.getScore() + 100);
               player.sendMessage(
                   "ネザークォーツ鉱石を壊しました！　現在のスコアは" + playerInfo.getScore() + "点！");
-              coal_cnt =0;
             }
           }
         }
