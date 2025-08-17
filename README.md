@@ -17,6 +17,7 @@ Minecraftプラグイン「OreDigging」に関するものです。
   表示することができます。
   
 ## デモ動画
+* 動画編集中  
 
 ## 環境
 * 設計言語          ：Oracle JDK　Java21  
