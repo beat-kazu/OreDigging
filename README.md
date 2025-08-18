@@ -33,10 +33,13 @@ Minecraftプラグイン「OreDigging」に関するものです。
 * 作業環境          ：Windows 11(24H2)  
 
 ## 事前準備
+* データベースの準備として、以下のファイルに記載の password をご自身のパスワードに変更してください
+  + resources/mybatis-config.xml  
+   ```　 <property name="password" value="password"/>　```
 * gradle shadowJar等で、本プラグインのfat Jarを作成してください
 * ご自身のMinecraftサーバーの「plugins」フォルダの中に先ほど作成したfat Jarファイルを追加してください
 * サーバーおよびMineCraftを起動し、「/oredig help」等のコマンドが実行できるかご確認ください
-
+  
 ## コマンド
 * %oredig
   + 鉱石掘りミニゲーム開始コマンドです。 
@@ -69,6 +72,7 @@ Minecraftプラグイン「OreDigging」に関するものです。
 
 ## 入れてみたかった機能
 * ミニゲーム開始後、鉱石をランダムで(洞窟のような環境を)自動生成させ鉱石の偏りをなくしたい。
+  ただ上記を実装するには、ワールドを再構築するイメージの為、断念。
 
 ## おわりに
 * Java学習者のアウトプットして、リポジトリ公開させていただきました
