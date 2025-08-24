@@ -20,11 +20,18 @@ Minecraftプラグイン「OreDigging」に関するものです。
 * なるべく大きいサイズを添付した為、デモによってサイズが異なっております。  
 画面が小さくて見づらいかと思いますが、イメージだけでも伝わればと思います。  
 * helpコマンド実行デモ
-*  ![help](https://github.com/user-attachments/assets/31346369-e288-4b84-9c24-0a2792aeb5cb)
+* https://github.com/user-attachments/assets/349b8519-12c0-4dca-b8ee-ee7886078c93
+
 * ゲームプレイデモ
-* ![ゲームプレイ](https://github.com/user-attachments/assets/0fc458f3-2372-400e-9376-3a4058027e15)
+* https://github.com/user-attachments/assets/a6f85588-8458-40a6-8060-3fbbf972c74b
+
+* デバッグプレイコマンド＋削除コマンド(デバッグ用のサンプル)
+* https://github.com/user-attachments/assets/4973663d-efa6-4c9b-b93b-596cb50dfd7e
+
 * 移動コマンド(デバッグ用のサンプル)
-* ![デバッグ移動](https://github.com/user-attachments/assets/62d44042-3abf-4acf-9299-27f67819602c)
+* https://github.com/user-attachments/assets/0bb25bd1-6327-46a1-91f6-95f11de7fe65
+
+
 
 ## 環境
 * 設計言語          ：Oracle JDK　Java21  
