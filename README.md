@@ -34,10 +34,17 @@ Minecraftプラグイン「OreDigging」に関するものです。
 
 
 ## 環境
-* 設計言語          ：Oracle JDK　Java21  
-* アプリケーション   ：Minecraftバージョン 1.21.5  
-* サーバ            ：Spigotバージョン    1.21.5  
-* 作業環境          ：Windows 11(24H2)  
+* 設計言語　　　　　　：Oracle JDK　Java21  
+* アプリケーション　　：Minecraftバージョン	1.21.5
+* サーバ　　　　　　　：Spigotバージョン	1.21.5
+* 作業環境　　　　　　：Windows 11(24H2)
+* ＭｙＳＱＬ　　　　　：mysql バージョン	8.0.42
+
+## データベース構成
+* データベース内構造
+* <img width="895" height="211" alt="image" src="https://github.com/user-attachments/assets/358e436d-3f60-4a1f-8ffa-e04ce2ff78e9" />
+* 実際の表示例
+* <img width="645" height="188" alt="image" src="https://github.com/user-attachments/assets/6364a7e9-2cdb-444d-90e7-b8e0be8826b7" />
 
 ## 事前準備
 * データベースの準備として、以下のファイルに記載の password をご自身のパスワードに変更してください
@@ -48,19 +55,19 @@ Minecraftプラグイン「OreDigging」に関するものです。
 * サーバーおよびMineCraftを起動し、「/oredig help」等のコマンドが実行できるかご確認ください
   
 ## コマンド
-* %oredig
+* /oredig
   + 鉱石掘りミニゲーム開始コマンドです。 
-* %oredig help  
+* /oredig help  
   + ヘルプコマンドです。ミニゲーム実行コマンド(oredig)の引数ヘルプメッセージを表示します。    
-* %oredig list
+* /oredig list
   + プレーヤーのスコアが保存されたDBのスコア上位5名を表示します。  
-* %oredig delte
+* /oredig delte
   + プレーヤーのスコアが保存されたDBの削除を行います。  
-* %oredig debug  
+* /oredig debug  
   + デバッグ用に鉱石を自動生成して、ミニゲームを開始できます。
-* %oredig tele1/%oredig tele2/%oredig tele3
+* /oredig tele1/%oredig tele2/%oredig tele3
   + プレーヤーが洞窟に強制移動できます。
-* %oredig return  
+* /oredig return  
   + プレーヤーが拠点に強制移動できます。
 
 ## ミニゲームの流れ
@@ -75,7 +82,9 @@ Minecraftプラグイン「OreDigging」に関するものです。
 
 ## 苦労した点
 * ミニゲーム終了時に、プレーヤー順位を表示させるところがSQLを直に打って
-  確認をしつつ実装しました。  
+  確認をしつつ実装しました。
+* 連続して同じ鉱石を掘った際に、コンボボーナスとして鉱石スコアが加算される仕組みを実装しましたが、
+　enumとMapとPredicate(関数型インターフェース)を組み合わせて使用し、なるべく冗長な記述をしないように心掛けた。
 
 ## 入れてみたかった機能
 * ミニゲーム開始後、鉱石をランダムで(洞窟のような環境を)自動生成させ鉱石の偏りをなくしたい。
