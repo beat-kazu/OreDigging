@@ -17,6 +17,6 @@ public class PlayerRank {
   private String playerName;
   private int score;
   private LocalDateTime registeredDt;
-  private int Rankbyscore;
+  private int rankByScore;
 
 }

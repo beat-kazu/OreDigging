@@ -33,18 +33,18 @@ import plugin.oreDigging.mapper.data.PlayerScore;
  * 　スコアは鉱石によって変わり、掘った鉱石の合計によってスコアが変動します。
  * 　結果はプレーヤー名、点数、日時などで保存されます。
  */
-public class oreDiggingDone extends BaseCommand implements  Listener {
+public class OreDiggingDone extends BaseCommand implements  Listener {
 
-  public static final String LIST = "list";
-  public static final String DELL = "delete";
-  public static final String TELE1 = "tele1";
-  public static final String TELE2 = "tele2";
-  public static final String TELE3 = "tele3";
-  public static final String RETURN = "return";
-  public static final String DEBUG = "debug";
-  public static final String HELP = "help";
+  private  static final String LIST = "list";
+  private  static final String DELL = "delete";
+  private  static final String TELE1 = "tele1";
+  private  static final String TELE2 = "tele2";
+  private  static final String TELE3 = "tele3";
+  private  static final String RETURN = "return";
+  private  static final String DEBUG = "debug";
+  private  static final String HELP = "help";
 
-  private final int GAME_TIME = 20;
+  private  final int GAME_TIME = 20;
 
   private final Main main;
   private final PlayerScoreData playerScoreData = new PlayerScoreData();
@@ -65,7 +65,7 @@ public class oreDiggingDone extends BaseCommand implements  Listener {
 
   private final Map<Ore_Type, Integer> OreBreakCount =  new EnumMap<>(Ore_Type.class);
 
-  public oreDiggingDone(Main main) {
+  public OreDiggingDone(Main main) {
     this.main = main;
   }
 
@@ -234,7 +234,7 @@ private PlayerInfo addNewPlayer(Player player) {
     Player player = event.getPlayer();
     Block block = event.getBlock();
 
-    Map<oreDiggingDone.Ore_Type, Predicate<Block>> conditionCheckers = getPredicateMap(
+    Map<OreDiggingDone.Ore_Type, Predicate<Block>> conditionCheckers = getPredicateMap(
         block);
 
     if(Objects.isNull(player) || playerInfoList.isEmpty()){
@@ -255,8 +255,8 @@ private PlayerInfo addNewPlayer(Player player) {
               default -> 150;
             };
 
-            for (Map.Entry<oreDiggingDone.Ore_Type, Predicate<Block>> entry : conditionCheckers.entrySet()) {
-              oreDiggingDone.Ore_Type type = entry.getKey();         // 条件の種類
+            for (Map.Entry<OreDiggingDone.Ore_Type, Predicate<Block>> entry : conditionCheckers.entrySet()) {
+              OreDiggingDone.Ore_Type type = entry.getKey();         // 条件の種類
               Predicate<Block> checker = entry.getValue(); // 判定関数
 
               // 直前の鉱石と同じか判定
@@ -293,8 +293,8 @@ private PlayerInfo addNewPlayer(Player player) {
    * @return　条件式
    */
   @NotNull
-  private Map<oreDiggingDone.Ore_Type, Predicate<Block>> getPredicateMap(Block block) {
-    Map<oreDiggingDone.Ore_Type, Predicate<Block>> conditionCheckers = Map.of(
+  private Map<OreDiggingDone.Ore_Type, Predicate<Block>> getPredicateMap(Block block) {
+    Map<OreDiggingDone.Ore_Type, Predicate<Block>> conditionCheckers = Map.of(
         Ore_Type.Coal_Type,   p -> ((block.getType() == getBlock().COAL_ORE)     || (block.getType() == getBlock().DEEPSLATE_COAL_ORE)),
         Ore_Type.Copper_Type, p -> ((block.getType() == getBlock().COPPER_ORE)   || (block.getType() == getBlock().DEEPSLATE_COPPER_ORE)),
         Ore_Type.Lapis_Type,  p -> ((block.getType() == getBlock().LAPIS_ORE)    || (block.getType() == getBlock().DEEPSLATE_LAPIS_ORE)),

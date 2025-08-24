@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * デバッグ用にブロックスポーンさせるデバッグコマンド
  */
-public class set_block_command implements CommandExecutor {
+public class SetBlockCommand implements CommandExecutor {
 
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,

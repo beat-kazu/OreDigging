@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * プレイヤー情報を扱うオブジェクト
+ * DBに存在するテーブルと連動する
+ */
 @Getter
 @Setter
 @NoArgsConstructor
